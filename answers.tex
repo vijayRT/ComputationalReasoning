@@ -11,7 +11,7 @@
 \newcommand{\opinion}[5]{$\omega_{#1} = (#2, #3, #4, #5)$}
 \begin{document}
     
-\title{COMP 8920 - Computational Reasoning in AI \\Midterm}
+\title{COMP 8920 Section 02\\ Computational Reasoning in AI \\Midterm}
 \author{
     Vijay Rajasekar Thirulokachander \\
     \large 105092311 \\
@@ -108,12 +108,140 @@ $$
 $$
     Beta(p_x, \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta)} \left(p_x\right)^{\alpha - 1}\left(1 - p_x\right)^{\beta - 1}, \alpha > 0, \beta > 0
 $$
+
+The PDF is normalized under the integration,
+
+$$\int_{0}^{1} Beta(p, \alpha, \beta)dp = 1$$
+
+Assume that $x$ represents a frequentist event, such as getting heads when flipping a coin. Let $r_x$ denote the number of observations 
+
+$$\alpha = r_x +  a_xW$$
+
+$$\beta = s_x + (1 - a_x)W$$    
+
+Using the $\alpha$ and $\beta$ parameters, we can express Beta PDF as an evidence notation,
+
+$$
+Beta^e(p_x, r_x, s_x, a_x) = \frac{\Gamma(r_x + s_x + W)}{\Gamma(r_x + a_xW) \Gamma(s_x + (1 - a_x)W)}\left(p_x\right)\left(1 - p_x\right)^{s_x + (1 - a_x)W - 1}
+$$
+
+The expected probability $E(x)$ as a function of Beta PDF parameters is 
+$$
+E(x) = \frac{\alpha}{\alpha + \beta} = \frac{r_x + a_xW}{r_x + s_x + W}
+$$
 The traditional interpretation of probability
 as likelihood of events gets a richer expression through probability density, which
 can be interpreted as second-order probability. This interpretation is the basis for
 mapping (high) probability density in Beta PDFs into (high) belief mass in opinions, through bijective mapping. As a consequence, flat probability density in Beta PDFs is represented as uncertainty in opinions.
 
+The Beta PDF is important in subjective logic, because a bijective mapping can
+be defined between the projected probability of a binomial opinion and the expected
+probability of a Beta PDF.
+
+The bijective mapping between a binomial opinion and a Beta PDF emerges from
+the intuitive requirement that $P(x) = E(x)$, i.e. that the projected probability of a
+binomial opinion must be equal to the expected probability of a Beta PDF.
+
+Let \opinion{x}{b_x}{d_x}{u_x}{a_x} be a binomial opinion and let $p(x)$ be a probability distribution, both over the same binomial random variable $X$. Let $Beta^e(p_x, r_x, s_x, a_x)$ be a Beta PDF. The opinion $\omega_x$ and the Beta PDF $Beta^e(p_x, r_x, s_x, a_x)$ are equivalent as follows:
+
+For $u_x \neq 0$:
+
+$$
+\begin{cases}
+    b_x = \frac{r_x}{W + r_x + s_x}\\
+    d_x = \frac{s_x}{W + r_x + s_x}\\
+    u_x = \frac{W}{W + r_x + s_x}\\
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+    r_x = \frac{b_xW}{u_x}\\
+    s_x = \frac{d_xW}{u_x}\\
+    1 = b_x + d_x + u_x\\
+\end{cases}
+$$
+
+For $u_x = 0$:
+
+$$
+\begin{cases}
+    b_x = \frac{r_x}{W + r_x + s_x}\\
+    d_x = \frac{s_x}{W + r_x + s_x}\\
+    u_x = \frac{W}{W + r_x + s_x}\\
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+    r_x = b_x . \infty\\
+    s_x = b_x . \infty\\
+    1 = b_x + d_x\\
+\end{cases}
+$$
+The below figure illustrates a binomial opinion \opinion{x}{0.52}{0.13}{0.35}{1} mapped into a Beta PDF graph.
+\begin{center}
+\includegraphics[width=6in]{images/add1viz.png}
+\end{center}
+
+The equivalence between binomial opinions and Beta PDFs is very powerful,
+because subjective-logic operators (SL operators) can then be applied to Beta PDFs,
+and statistics operations for Beta PDFs can be applied to opinions. In addition, it
+makes it possible to determine binomial opinions from statistical observations.
+
 \subsection{Dirichlet PDFs}
+Let $\mathbb{X}$ be a domain consisting of $k$ mutually disjoint values. Let $\alpha_x$ represent the strength vector over the values of $\mathbb{X}$ and let $p_x$ denote the probability distribution over $\mathbb{X}$. With $p_x$ as a k-dimensional variable the Dirichlet PDF denoted $Dir(p_x, \alpha_x)$ is expressed as:
+$$
+Dir(p_x, \alpha_x) = \frac{\Gamma\left(\sum_{x \in \mathbb{X}} \alpha_X(x)\right)}{\prod_{x \in \mathbb{X}(\alpha_X(x))}}\prod_{x \in \mathbb{X}}p_x(x)^{a_X(x) - 1},   \alpha_X(x) \geq 0
+$$
+
+The strength vector $\alpha_X$ represents the prior, as well as the observation evidence. The non-informative prior weight is expressed as a constant W, and this weigth is distributed over all the outcomes as a function of base rate. As already mentioned, it is normally assumed that $W = 2$.
+
+Evidence representation in Dirichlet PDF can be done using the evidence vector $r_x$, base rate distribution $a_x$ and non-informative prior W can be done as below:
+
+$$
+Dir^e_x(p_x, r_x, a_x) = \frac{\Gamma\left(\sum_{x \in \mathbb{X}} (r_X(x) + a_X(x)W)\right)}{\prod_{x \in \mathbb{X}}(r_X(x) + a_X(x)W)}\prod_{x \in \mathbb{X}}p_x(x)^{(r_X(x) + a_X(x)W) - 1},   \alpha_X(x) \geq 0
+$$
+This notation is useful because it allows the determination of the probability densities over variables, where each value can have an arbitrary base rate.
+
+The bijective mapping between $\omega_x$ and $Dir^e_x(p_x, r_x, a_x)$ is based on the requirement for equality between the projected probability distribution $P_x$ derived from $\omega_x$ and the expected probability distribution $E_x$ derived from $Dir^e_x(p_x, r_x, a_x)$. This requirement is expressed as:
+
+$$
+P_x = E_x
+\Leftrightarrow
+b_X(x) + a_X(x)u_X = \frac{r_X(x) + Wa_X(x)}{W + \sum_{x_j \in \mathbb{X}} r_X(x_j)}
+$$
+
+Therefore the bijective mapping can be described as below:
+
+For $u_x \neq 0$:
+
+$$
+\begin{cases}
+    b_X(x) = \frac{r_X(x)}{W + \sum_{x_j \in \mathbb{X}} r_X(x_i)}\\
+    u_X = \frac{r_X(x)}{W + \sum_{x_j \in \mathbb{X}} r_X(x_i)}\\
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+    r_X(x) = \frac{Wb_X(x)}{u_x}\\
+    1 = u_x + \sum_{x_j \in \mathbb{X}} b_X(x_i)\\
+\end{cases}
+$$
+
+For $u_x = 0$:
+
+$$
+\begin{cases}
+    b_X(x) = \frac{r_X(x)}{W + \sum_{x_j \in \mathbb{X}} r_X(x_j)}\\
+    u_X = \frac{r_X(x)}{W + \sum_{x_j \in \mathbb{X}} r_X(x_j)}\\
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+    r_X(x) = b_X(x) . \infty\\
+    1 = \sum_{x_j \in \mathbb{X}} b_X(x_i)\\
+\end{cases}
+$$
+\\
+The below figure illustrates Dirichlet PDF over $(k - 1)$ dimensions
+\begin{center}
+    \includegraphics[width=6in]{images/dirich.png}
+\end{center}
 \section{Subjective Logic Operators}
 
 All the below definitions were obtained from \mycite{Subjective Logic: A Formalism for Reasoning under Uncertainty, Audun Jøsang, Chapters 6 and 7}\\
@@ -134,14 +262,15 @@ $$
 The complement operator corresponds to binary logic NOT, and to complement
 of probabilities.
 
-Example 1:
+Complement Example 1:
 Input data: 
 \opinion{x}{0}{0.64}{0.35}{0.37}
 \begin{center}
 \includegraphics[width=6in]{images/comp1.png}
 \end{center}
+\hrulefill\\
 \needspace{5\baselineskip}
-Example 2:
+Complement Example 2:
 Input data: 
 \opinion{x}{0}{0}{1}{0.29}(Vacuous Opinion)
 \begin{center}
@@ -161,7 +290,7 @@ $$
     a_{(x_1 \cup x_2)} = 1 - a_x
 \end{cases}
 $$\\
-Example 1:\\
+Addition Example 1:\\
 \begin{center}
     Input data: 
     \opinion{x}{0.16}{0.54}{0.3}{0.73}, 
@@ -169,8 +298,9 @@ Example 1:\\
     \includegraphics[width=6in]{images/add1.png}
     \includegraphics[width=6in]{images/add1viz.png}
 \end{center}
+\hrulefill\\
 \needspace{5\baselineskip}
-Example 2:
+Addition Example 2:
     \begin{center}
         Input data: 
         \opinion{x}{0}{0}{1}{0.36}, 
@@ -178,8 +308,9 @@ Example 2:
         \includegraphics[width=6in]{images/add2.png}
         \includegraphics[width=6in]{images/add2viz.png}
     \end{center}
+    \hrulefill\\
 \needspace{5\baselineskip}
-Example 3:
+Addition Example 3:
     \begin{center}
         Input data: 
         \opinion{x}{0.5}{0.5}{0}{0.36} (Dogmatic), 
@@ -204,7 +335,7 @@ $$
     a_{((x_1 \cup x_2)/x_2)} = a_{(x_1 \cup x_2)} - a_{x_2}
 \end{cases}
 $$\\
-Example 1:\\
+Subtraction Example 1:\\
 \begin{center}
     Input data: 
     \opinion{x_1 \cup x_2}{0.16}{0.54}{0.3}{0.73}, 
@@ -212,8 +343,9 @@ Example 1:\\
     \includegraphics[width=6in]{images/sub1.png}
     \includegraphics[width=6in]{images/sub1viz.png}
 \end{center}
+\hrulefill\\
 \needspace{5\baselineskip}
-Example 2:
+Subtraction Example 2:
     \begin{center}
         Input data: 
         \opinion{x_1 \cup x_2}{0}{0}{1}{0.36}, 
@@ -221,13 +353,203 @@ Example 2:
         \includegraphics[width=6in]{images/sub2.png}
         \includegraphics[width=6in]{images/sub2viz.png}
     \end{center}
+    \hrulefill\\
 \needspace{5\baselineskip}
-Example 3:
+Subtraction Example 3:
     \begin{center}
         Input data: 
         \opinion{x_1 \cup x_2}{0.5}{0.5}{0}{0.36} (Vacuous), 
         \opinion{x_2}{0}{0}{1}{0.39} (Dogmatic)\\
         \includegraphics[width=6in]{images/sub3.png}
         \includegraphics[width=6in]{images/sub3viz.png}
+\end{center}
+
+\subsection{Multiplication}
+Let \opinion{x}{b_x}{d_x}{u_x}{a_x} and \opinion{y}{b_y}{d_y}{u_y}{a_y} be two independent binomial opinions on x and y respectively. The binomial opinion $\omega_{x \land y}$ on the conjunction $(x \land y)$ is:
+$$
+\omega_{x \land y}
+\begin{cases}
+    b_{x \land y} = b_xb_y+ \frac{(1 - a_x)a_yb_xu_y + a_x(1 - a_y)u_xb_y}{1 - a_xa_y}\\    
+    d_{x \land y} = d_x + d_y - d_xd_y\\
+    u_{x \land y} = u_xu_y+ \frac{(1 - a_x)a_yb_xu_y + a_x(1 - a_y)u_xb_y}{1 - a_xa_y}\\
+    a_{x \land y} = a_xa_y
+\end{cases}
+$$\\
+Multiplication Example 1:\\
+\begin{center}
+    Input data: 
+    \opinion{x_1}{0.21}{0.37}{0.42}{0.54}, 
+    \opinion{x_2}{0.55}{0.15}{0.3}{0.25}\\
+    \includegraphics[width=6in]{images/mul1.png}
+    \includegraphics[width=6in]{images/mul1viz.png}
+\end{center}
+\hrulefill\\
+\needspace{5\baselineskip}
+Multiplication Example 2:
+    \begin{center}
+        Input data: 
+        \opinion{x_1}{0.66}{0.06}{0.29}{0.28}, 
+        \opinion{x_2}{0}{0.29}{0.71}{0.55}\\
+        \includegraphics[width=6in]{images/mul2.png}
+        \includegraphics[width=6in]{images/mul2viz.png}
     \end{center}
+    \hrulefill\\
+\needspace{5\baselineskip}
+Multiplication Example 3:
+    \begin{center}
+        Input data: 
+        \opinion{x_1}{0.72}{0.28}{0}{0.72} (Dogmatic), 
+        \opinion{x_2}{0}{0}{1}{0.44} (Vacuous)\\
+        \includegraphics[width=6in]{images/mul3.png}
+        \includegraphics[width=6in]{images/mul3viz.png}
+\end{center}
+\subsection{Co-Multiplication}
+Let \opinion{x}{b_x}{d_x}{u_x}{a_x} and \opinion{y}{b_y}{d_y}{u_y}{a_y} be two independent binomial opinions on x and y respectively. The binomial opinion $\omega_{x \lor y}$ on the conjunction $(x \lor y)$ is:
+$$
+\omega_{x \lor y}
+\begin{cases}
+    b_{x \lor y} = d_x + d_y - d_xd_y\\
+    d_{x \lor y} = b_xb_y+ \frac{a_x(1 - a_y)d_xu_y + (1 - a_x)a_yu_xd_y}{a_x + a_y - a_xa_y}\\    
+    u_{x \lor y} = u_xu_y+ \frac{a_yd_xu_y+a_xu_xd_y}{a_x+a_y-a_xa_y}\\
+    a_{x \lor y} = a_x + a_y - a_xa_y
+\end{cases}
+$$\\
+Co-Multiplication Example 1:\\
+\begin{center}
+    Input data:
+    \opinion{x_1}{0.16}{0.48}{0.35}{0.72}, 
+    \opinion{x_2}{0.1}{0.49}{0.41}{0.3}\\
+    \includegraphics[width=6in]{images/comul1.png}
+    \includegraphics[width=6in]{images/comul1viz.png}
+\end{center}
+\hrulefill\\
+\needspace{5\baselineskip}
+Co-Multiplication Example 2:
+    \begin{center}
+        Input data: 
+        \opinion{x_1}{0.02}{0.23}{0.75}{0.72}, 
+        \opinion{x_2}{0.6}{0.19}{0.2}{0.24}\\
+        \includegraphics[width=6in]{images/comul2.png}
+        \includegraphics[width=6in]{images/comul2viz.png}
+    \end{center}
+    \hrulefill\\
+\needspace{5\baselineskip}
+Co-Multiplication Example 3:
+    \begin{center}
+        Input data: 
+        \opinion{x_1}{0}{1}{0}{0.72} (Dogmatic), 
+        \opinion{x_2}{0}{0}{1}{0.45} (Vacuous)\\
+        \includegraphics[width=6in]{images/comul3.png}
+        \includegraphics[width=6in]{images/comul3viz.png}
+\end{center}
+\subsection{Division}
+The inverse operation to binomial multiplication is binomial division. The quotient
+of opinions about propositions x and y represents the opinion about a proposition z
+which is independent of y such that $\omega_x = \omega_{y \land z}$.
+
+Let \opinion{x}{b_x}{d_x}{u_x}{a_x} and \opinion{y}{b_y}{d_y}{u_y}{a_y} be two independent binomial opinions on x and y respectively.
+The division of $\omega_x$ by $\omega_y$ produces the quotient opinion: \opinion{x \overline{\land} y}{b_{x \overline{\land} y}}{d_{x \overline{\land} y}}{u_{x \overline{\land} y}}{a_{x \overline{\land} y}}
+$$
+\omega_{x \overline{\land} y}
+\begin{cases}
+    b_{x \overline{\land} y} = \frac{a_y(b_x + a_xu_x)}{(a_y - a_x)(b_y + a_yu_y)} - \frac{a_x (1 - d_x)}{(a_y - a_x)(1 - d_y)}\\
+    d_{x \overline{\land} y} = \frac{d_x - d_y}{1 - d_y}\\
+    u_{x \overline{\land} y} = \frac{a_y (1 - d_x)}{(a_y - a_x)(1 - d_y)} - \frac{a_y(b_x + a_xu_x)}{(a_y - a_x)(b_y + a_yu_y)}\\
+    a_{x \overline{\land} y} = \frac{a_x}{a_y}
+\end{cases}
+$$\\
+where the following constraints are satisfied:
+$$
+Constraints
+\begin{cases}
+    b_x \geq \frac{a_x(1 - a_y) (1 - d_x) b_y}{(1 - a_x)a_y (1_dy)}\\
+    d_x \geq d_y\\
+    u_x = \geq \frac{u_x(1 - a_y) (1 - d_x) b_y}{(1 - a_x) (1_dy)}\\
+    a_x < a_y
+\end{cases}
+$$\\
+Division Example 1:\\
+\begin{center}
+    Input data:
+    \opinion{x_1}{0.25}{0.31}{0.44}{0.72}, 
+    \opinion{x_2}{0.66}{0.12}{0.22}{0.87}\\
+    \includegraphics[width=6in]{images/div1.png}
+    \includegraphics[width=6in]{images/div1viz.png}
+\end{center}
+\hrulefill\\
+\needspace{5\baselineskip}
+Division Example 2:
+    \begin{center}
+        Input data: 
+        \opinion{x_1}{0.24}{0.64}{0.12}{0.72}, 
+        \opinion{x_2}{0.52}{0.48}{0}{0.81} (Dogmatic)
+        \includegraphics[width=6in]{images/div2.png}
+        \includegraphics[width=6in]{images/div2viz.png}
+    \end{center}
+    \hrulefill\\
+\needspace{5\baselineskip}
+Division Example 3:
+    \begin{center}
+        Input data: 
+        \opinion{x_1}{1}{0}{0}{0.72} (Dogmatic), 
+        \opinion{x_2}{0.34}{0.36}{0.3}{0.81}\\
+        \includegraphics[width=6in]{images/div3.png}
+        It was not possible to obtain a visualization for this sample case.
+\end{center}
+
+\subsection{Co-Division}
+The inverse operation to binomial co-multiplication is binomial co-division. The co-quotient
+of opinions about propositions x and y represents the opinion about a proposition z
+which is independent of y such that $\omega_x = \omega_{y \land z}$.
+
+Let \opinion{x}{b_x}{d_x}{u_x}{a_x} and \opinion{y}{b_y}{d_y}{u_y}{a_y} be two independent binomial opinions on x and y respectively.
+The division of $\omega_x$ by $\omega_y$ produces the coquotient opinion: \opinion{x \overline{\lor} y}{b_{x \overline{\lor} y}}{d_{x \overline{\lor} y}}{u_{x \overline{\lor} y}}{a_{x \overline{\lor} y}}
+$$
+\omega_{x \overline{\lor} y}
+\begin{cases}
+    b_{x \overline{\lor} y} = \frac{b_x - b_y}{1 - b_y}\\
+    u_{x \overline{\lor} y} = \frac{(1 - a_y)(1 - b_x)}{(a_x - a_y)(1 - b_y)} - \frac{(1 - a_y) (1 - b_x)}{(a_x - a_y)(1 - b_y)}\\
+    d_{x \overline{\lor} y} = \frac{(1 - a_y) (1 - b_x)}{(a_x - a_y)(1 - b_y)} - \frac{(1 - a_y)(d_x + (1 - a_x)u_x)}{(a_x - a_y)(1 - b_y)}\\
+    a_{x \overline{\lor} y} = \frac{a_x - a_y}{1 - a_y}
+\end{cases}
+$$\\
+where the following constraints are satisfied:
+$$
+Constraints
+\begin{cases}
+    d_x \geq \frac{(1 - a_x)a_y(1 - b_x)d_y}{a_x(1 - a_y)(1 - b_y)}\\
+    u_x \geq \frac{a_y(1 - b_x) u_y}{a_x (1 - b_y)}\\
+    b_x \geq b_y\\
+    a_x > a_y
+\end{cases}
+$$\\
+Co-Division Example 1:\\
+\begin{center}
+    Input data:
+    \opinion{x_1}{0.2}{0.43}{0.37}{0.72}, 
+    \opinion{x_2}{0.09}{0.59}{0.31}{0.26}\\
+    \includegraphics[width=6in]{images/codiv1.png}
+    \includegraphics[width=6in]{images/codiv1viz.png}
+\end{center}
+\hrulefill\\
+\needspace{5\baselineskip}
+Co-Division Example 2:
+    \begin{center}
+        Input data: 
+        \opinion{x_1}{0.2}{0.43}{0.37}{0.66}, 
+        \opinion{x_2}{0.09}{0.59}{0.31}{0.79}\\
+        \includegraphics[width=6in]{images/codiv2.png}
+        It was not possible to obtain a visualization for this sample case.
+    \end{center}
+    \hrulefill\\
+\needspace{5\baselineskip}
+Co-Division Example 3:
+    \begin{center}
+        Input data: 
+        \opinion{x_1}{0.5}{0.32}{0.18}{0.26}, 
+        \opinion{x_2}{0.33}{0.14}{0.53}{0.35}\\
+        \includegraphics[width=6in]{images/codiv3.png}
+        It was not possible to obtain a visualization for this sample case.
+\end{center}
+\hrulefill\\
 \end{document}
