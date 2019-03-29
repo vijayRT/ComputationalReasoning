@@ -6,6 +6,8 @@
 \usepackage{enumerate}
 \usepackage{needspace}
 \usepackage{graphicx}
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
 \graphicspath{{./images}}
 \newcommand{\mycite}[1]{\textbf{\textit{#1}}}
 \newcommand{\opinion}[5]{$\omega_{#1} = (#2, #3, #4, #5)$}
@@ -22,6 +24,38 @@
 
 
 \section{Binary Division Constraint Derivation}
+\subsection{Deriving $d_x \geq d_y$}
+Given,
+$$
+d_{x \overline{\land} y} = \frac{d_x - d_y}{1 - d_y}
+$$
+If $d_{x \overline{\land} y} = 0$
+$$
+0 = \frac{d_x - d_y}{1 - d_y}
+$$
+$$
+\Rightarrow \frac{d_y}{1 - d_y} = \frac{d_x}{1-d_y}
+$$
+$$
+\Rightarrow d_x = d_yx
+$$
+
+Since $0 \leq d_{x \overline{\land} y} \leq 1$, and $d_x = d_y$ for the lowest possible value of $0 \leq d_{x \overline{\land} y}$, therefore
+
+$$
+d_x \geq d_y
+$$
+\subsection{Deriving $a_x < a_y$}
+Given,
+$$
+b_{x \overline{\land} y} = \frac{a_y(b_x + a_xu_x)}{(a_y - a_x)(b_y + a_yu_y)} - \frac{a_x (1 - d_x)}{(a_y - a_x)(1 - d_y)}
+$$
+If $a_x \geq a_y$
+$$
+b_{x \overline{\land} y} = \frac{a_y(b_x + a_xu_x)}{\infty(b_y + a_yu_y)} - \frac{a_x (1 - d_x)}{\infty(1 - d_y)}
+$$
+which is clearly undefined.
+Therefore, $a_x < a_y$
 \section{Defintions of concepts and their applications in reasoning}
 \subsection{Probability Measure}
 
@@ -83,7 +117,17 @@ reasoning, and is used in a wide range of applications. It basically consists of
 parent and child propositions, and then to combine those conditionals with evidence about the parent propositions in order to
 infer conclusions about the child propositions. Probabilistic conditional reasoning is used extensively in areas where conclusions need to be derived from probabilistic input evidence, such as for making
 diagnoses from medical tests. \mycite{[Conditional Reasoning with Subjective Logic, Audun Jøsang]}
+
 \subsection{Probabilistic Reasoning}
+Probability theory has existed in one form or another for several hundred years.
+During this time various alternative formulations have been introduced, and it 
+is now difficult to say where the definitive account may be found. Probability theory is built on three axioms or laws that define the behaviour of a probability measure, which may be
+used as an estimate of the degree to which an uncertain event is likely to occur. They are:
+\begin{enumerate}[i]
+    \item {Convexity Law: $0 \leq Pr(A | H) \leq 1$}
+    \item {Addition Law: $Pr(A \cup B |  H) = Pr(A | H) + Pr(B | H)$}
+    \item {Multiplication Law: $Pr(A \cap B | H) = Pr(A | H) . Pr(B | A \cap H)$}
+\end{enumerate}
 \subsection{Aleatory and Epistemic Opinions}
 
 \mycite{[Lecture Slides 4]}
@@ -240,7 +284,7 @@ $$
 \\
 The below figure illustrates Dirichlet PDF over $(k - 1)$ dimensions
 \begin{center}
-    \includegraphics[width=6in]{images/dirich.png}
+    \includegraphics[width=3in]{images/dirich.png}
 \end{center}
 \section{Subjective Logic Operators}
 
@@ -266,7 +310,7 @@ Complement Example 1:
 Input data: 
 \opinion{x}{0}{0.64}{0.35}{0.37}
 \begin{center}
-\includegraphics[width=6in]{images/comp1.png}
+\includegraphics[width=3in]{images/comp1.png}
 \end{center}
 \hrulefill\\
 \needspace{5\baselineskip}
@@ -274,7 +318,7 @@ Complement Example 2:
 Input data: 
 \opinion{x}{0}{0}{1}{0.29}(Vacuous Opinion)
 \begin{center}
-\includegraphics[width=6in]{images/comp2.png}
+\includegraphics[width=3in]{images/comp2.png}
 \end{center}
 \subsection{Addition}
 Addition of opinions in subjective logic is a binary operator that takes opinions
@@ -295,8 +339,8 @@ Addition Example 1:\\
     Input data: 
     \opinion{x}{0.16}{0.54}{0.3}{0.73}, 
     \opinion{y}{0.36}{0.21}{0.44}{0.39}\\
-    \includegraphics[width=6in]{images/add1.png}
-    \includegraphics[width=6in]{images/add1viz.png}
+    \includegraphics[width=3in]{images/add1.png}
+    \includegraphics[width=3in]{images/add1viz.png}
 \end{center}
 \hrulefill\\
 \needspace{5\baselineskip}
@@ -305,8 +349,8 @@ Addition Example 2:
         Input data: 
         \opinion{x}{0}{0}{1}{0.36}, 
         \opinion{y}{0.1}{0.48}{0.43}{0.39}\\
-        \includegraphics[width=6in]{images/add2.png}
-        \includegraphics[width=6in]{images/add2viz.png}
+        \includegraphics[width=3in]{images/add2.png}
+        \includegraphics[width=3in]{images/add2viz.png}
     \end{center}
     \hrulefill\\
 \needspace{5\baselineskip}
@@ -315,8 +359,8 @@ Addition Example 3:
         Input data: 
         \opinion{x}{0.5}{0.5}{0}{0.36} (Dogmatic), 
         \opinion{y}{0}{0}{1}{0.39} (Vacuous)\\
-        \includegraphics[width=6in]{images/add3.png}
-        \includegraphics[width=6in]{images/add3viz.png}
+        \includegraphics[width=3in]{images/add3.png}
+        \includegraphics[width=3in]{images/add3viz.png}
     \end{center}
 
 \subsection{Subtraction}
@@ -340,8 +384,8 @@ Subtraction Example 1:\\
     Input data: 
     \opinion{x_1 \cup x_2}{0.16}{0.54}{0.3}{0.73}, 
     \opinion{x_2}{0.36}{0.21}{0.44}{0.39}\\
-    \includegraphics[width=6in]{images/sub1.png}
-    \includegraphics[width=6in]{images/sub1viz.png}
+    \includegraphics[width=3in]{images/sub1.png}
+    \includegraphics[width=3in]{images/sub1viz.png}
 \end{center}
 \hrulefill\\
 \needspace{5\baselineskip}
@@ -350,8 +394,8 @@ Subtraction Example 2:
         Input data: 
         \opinion{x_1 \cup x_2}{0}{0}{1}{0.36}, 
         \opinion{x_2}{0.1}{0.48}{0.43}{0.39}\\
-        \includegraphics[width=6in]{images/sub2.png}
-        \includegraphics[width=6in]{images/sub2viz.png}
+        \includegraphics[width=3in]{images/sub2.png}
+        \includegraphics[width=3in]{images/sub2viz.png}
     \end{center}
     \hrulefill\\
 \needspace{5\baselineskip}
@@ -360,8 +404,8 @@ Subtraction Example 3:
         Input data: 
         \opinion{x_1 \cup x_2}{0.5}{0.5}{0}{0.36} (Vacuous), 
         \opinion{x_2}{0}{0}{1}{0.39} (Dogmatic)\\
-        \includegraphics[width=6in]{images/sub3.png}
-        \includegraphics[width=6in]{images/sub3viz.png}
+        \includegraphics[width=3in]{images/sub3.png}
+        \includegraphics[width=3in]{images/sub3viz.png}
 \end{center}
 
 \subsection{Multiplication}
@@ -380,8 +424,8 @@ Multiplication Example 1:\\
     Input data: 
     \opinion{x_1}{0.21}{0.37}{0.42}{0.54}, 
     \opinion{x_2}{0.55}{0.15}{0.3}{0.25}\\
-    \includegraphics[width=6in]{images/mul1.png}
-    \includegraphics[width=6in]{images/mul1viz.png}
+    \includegraphics[width=3in]{images/mul1.png}
+    \includegraphics[width=3in]{images/mul1viz.png}
 \end{center}
 \hrulefill\\
 \needspace{5\baselineskip}
@@ -390,8 +434,8 @@ Multiplication Example 2:
         Input data: 
         \opinion{x_1}{0.66}{0.06}{0.29}{0.28}, 
         \opinion{x_2}{0}{0.29}{0.71}{0.55}\\
-        \includegraphics[width=6in]{images/mul2.png}
-        \includegraphics[width=6in]{images/mul2viz.png}
+        \includegraphics[width=3in]{images/mul2.png}
+        \includegraphics[width=3in]{images/mul2viz.png}
     \end{center}
     \hrulefill\\
 \needspace{5\baselineskip}
@@ -400,8 +444,8 @@ Multiplication Example 3:
         Input data: 
         \opinion{x_1}{0.72}{0.28}{0}{0.72} (Dogmatic), 
         \opinion{x_2}{0}{0}{1}{0.44} (Vacuous)\\
-        \includegraphics[width=6in]{images/mul3.png}
-        \includegraphics[width=6in]{images/mul3viz.png}
+        \includegraphics[width=3in]{images/mul3.png}
+        \includegraphics[width=3in]{images/mul3viz.png}
 \end{center}
 \subsection{Co-Multiplication}
 Let \opinion{x}{b_x}{d_x}{u_x}{a_x} and \opinion{y}{b_y}{d_y}{u_y}{a_y} be two independent binomial opinions on x and y respectively. The binomial opinion $\omega_{x \lor y}$ on the conjunction $(x \lor y)$ is:
@@ -419,8 +463,8 @@ Co-Multiplication Example 1:\\
     Input data:
     \opinion{x_1}{0.16}{0.48}{0.35}{0.72}, 
     \opinion{x_2}{0.1}{0.49}{0.41}{0.3}\\
-    \includegraphics[width=6in]{images/comul1.png}
-    \includegraphics[width=6in]{images/comul1viz.png}
+    \includegraphics[width=3in]{images/comul1.png}
+    \includegraphics[width=3in]{images/comul1viz.png}
 \end{center}
 \hrulefill\\
 \needspace{5\baselineskip}
@@ -429,8 +473,8 @@ Co-Multiplication Example 2:
         Input data: 
         \opinion{x_1}{0.02}{0.23}{0.75}{0.72}, 
         \opinion{x_2}{0.6}{0.19}{0.2}{0.24}\\
-        \includegraphics[width=6in]{images/comul2.png}
-        \includegraphics[width=6in]{images/comul2viz.png}
+        \includegraphics[width=3in]{images/comul2.png}
+        \includegraphics[width=3in]{images/comul2viz.png}
     \end{center}
     \hrulefill\\
 \needspace{5\baselineskip}
@@ -439,8 +483,8 @@ Co-Multiplication Example 3:
         Input data: 
         \opinion{x_1}{0}{1}{0}{0.72} (Dogmatic), 
         \opinion{x_2}{0}{0}{1}{0.45} (Vacuous)\\
-        \includegraphics[width=6in]{images/comul3.png}
-        \includegraphics[width=6in]{images/comul3viz.png}
+        \includegraphics[width=3in]{images/comul3.png}
+        \includegraphics[width=3in]{images/comul3viz.png}
 \end{center}
 \subsection{Division}
 The inverse operation to binomial multiplication is binomial division. The quotient
@@ -473,8 +517,8 @@ Division Example 1:\\
     Input data:
     \opinion{x_1}{0.25}{0.31}{0.44}{0.72}, 
     \opinion{x_2}{0.66}{0.12}{0.22}{0.87}\\
-    \includegraphics[width=6in]{images/div1.png}
-    \includegraphics[width=6in]{images/div1viz.png}
+    \includegraphics[width=3in]{images/div1.png}
+    \includegraphics[width=3in]{images/div1viz.png}
 \end{center}
 \hrulefill\\
 \needspace{5\baselineskip}
@@ -483,8 +527,8 @@ Division Example 2:
         Input data: 
         \opinion{x_1}{0.24}{0.64}{0.12}{0.72}, 
         \opinion{x_2}{0.52}{0.48}{0}{0.81} (Dogmatic)
-        \includegraphics[width=6in]{images/div2.png}
-        \includegraphics[width=6in]{images/div2viz.png}
+        \includegraphics[width=3in]{images/div2.png}
+        \includegraphics[width=3in]{images/div2viz.png}
     \end{center}
     \hrulefill\\
 \needspace{5\baselineskip}
@@ -493,7 +537,7 @@ Division Example 3:
         Input data: 
         \opinion{x_1}{1}{0}{0}{0.72} (Dogmatic), 
         \opinion{x_2}{0.34}{0.36}{0.3}{0.81}\\
-        \includegraphics[width=6in]{images/div3.png}
+        \includegraphics[width=3in]{images/div3.png}
         It was not possible to obtain a visualization for this sample case.
 \end{center}
 
@@ -528,8 +572,8 @@ Co-Division Example 1:\\
     Input data:
     \opinion{x_1}{0.2}{0.43}{0.37}{0.72}, 
     \opinion{x_2}{0.09}{0.59}{0.31}{0.26}\\
-    \includegraphics[width=6in]{images/codiv1.png}
-    \includegraphics[width=6in]{images/codiv1viz.png}
+    \includegraphics[width=3in]{images/codiv1.png}
+    \includegraphics[width=3in]{images/codiv1viz.png}
 \end{center}
 \hrulefill\\
 \needspace{5\baselineskip}
@@ -538,18 +582,150 @@ Co-Division Example 2:
         Input data: 
         \opinion{x_1}{0.2}{0.43}{0.37}{0.66}, 
         \opinion{x_2}{0.09}{0.59}{0.31}{0.79}\\
-        \includegraphics[width=6in]{images/codiv2.png}
+        \includegraphics[width=3in]{images/codiv2.png}
         It was not possible to obtain a visualization for this sample case.
     \end{center}
-    \hrulefill\\
 \needspace{5\baselineskip}
 Co-Division Example 3:
     \begin{center}
         Input data: 
         \opinion{x_1}{0.5}{0.32}{0.18}{0.26}, 
         \opinion{x_2}{0.33}{0.14}{0.53}{0.35}\\
-        \includegraphics[width=6in]{images/codiv3.png}
+        \includegraphics[width=3in]{images/codiv3.png}
         It was not possible to obtain a visualization for this sample case.
 \end{center}
-\hrulefill\\
+\section{Approaches to Reasoning}
+Various parts of the below essay have been adapted from \mycite{A Review of Uncertainty Handling Formalisms, Simon Parsons and Anthony Hunter}.\\
+Over the decades, various approaches to reasoning have been developed, each of which provide a formalism to handle uncertainty and ignorance. Uncertainty is generally considered to be a sub jective measure of the certainty of something and is
+thus modelled using a numerical value, typically between 0 and 1 with 0 denoting falsity and 1 denoting truth. Absence is the occurrence of missing facts,
+and is usually dealt with by essentially logical methods. The wide acceptance of
+the suggestion that uncertainty and absence are essentially different, and must
+therefore be handled by different techniques has lead to a schism in approximate
+reasoning between the "symbolic camp" who use logical methods to deal with
+absence and the "numerical camp" who use quantitative measures to deal with
+uncertainty. Let us look at these approaches in detail and compare their advantages and disadvantages with Subjective Logic as proposed by Prof. Jøsang.
+\subsection{Numerical Approaches}
+Numerical Approaches towards handling uncertainty can be divided into three categories: Probability Theory, Possibility Theory and Evidence Theory. Even though these theories may appear significantly different, they are remarkably similar. The basic problem is how to weigh up the degree to which several uncertain
+events are believed to occur so that the most believed may be unambiguously identified. The basis on which the "belief" is assigned is a contentious issue,
+though all the theories that we shall consider assume allocation by an assignment
+function that distributes belief to possible events under consideration. Belief may
+be distributed on the basis of statistical information, physical possibility, or purely subjective assessment by an expert or otherwise. The belief
+assigned is a number between 0 and 1, with 0 being the belief assigned to a fact
+that is known to be false, and 1 the belief assigned to a fact known to be
+true. The infinite number of degrees of belief between the limits represent various
+shades of uncertainty.\\
+\subsubsection{Probability Theory}
+Probability theory has existed in one form or another for several hundred years.
+During this time various alternative formulations have been introduced, and it 
+is now difficult to say where the definitive account may be found. Probability theory is built on three axioms or laws that define the behaviour of a probability measure, which may be
+used as an estimate of the degree to which an uncertain event is likely to occur. They are:
+\begin{enumerate}[i]
+    \item {Convexity Law: $0 \leq Pr(A | H) \leq 1$}
+    \item {Addition Law: $Pr(A \cup B |  H) = Pr(A | H) + Pr(B | H)$}
+    \item {Multiplication Law: $Pr(A \cap B | H) = Pr(A | H) . Pr(B | A \cap H)$}
+\end{enumerate}
+The above laws form the basis for another set of important laws that define the use of probability theory in artificial intelligence:
+\begin{enumerate}[i]
+    \item {Jeffrey's rule: $\sum\limits_{i = 1, ..., n}Pr(A|B_i)Pr(B_i)$}
+    \item {Bayes' Theorem: $Pr(A|B) = \frac{Pr(B|A) . Pr(A)}{Pr(B)}$}
+\end{enumerate}
+\subsubsection{Evidence Theory}
+Evidence Theory, otherwise known as Dempster Shafer Theory, was an attempt at remedying the limitations of probability theory. The theory deals with a frame of discernment: the set of elements $\theta = {\theta_1, \theta_2}$ which is assigned a *belief mass*, wherein:
+
+$$
+m(\emptyset) = 0\\
+$$
+$$
+\sum\limits_{A \subseteq \theta} m(A) = 1
+$$
+
+We can define the belief we have in a subset A as the sum of all the probability masses that support its constituents:
+$$
+Bel(A) = \sum\limits_{B \subseteq A} m(B)
+$$
+$$
+Pl(A) = \sum\limits_{B \cap A \neq \emptyset} m(B)
+$$
+$$
+Pl(A) = 1 - Bel(\neg A)
+$$
+
+The interval $[Bel(A), Pl(A)]$ can be considered to be a measure of our ignorance about A, and can vary from zero when we have the same degree of belief in A as would be generated by probability theory, to 1 when A has belief 0 and plausibility 1. This means that no mass is assigned to A or any of its subsets, but equally no mass is assigned to $\neg A$.
+
+\subsubsection{Possibility Theory}
+The economist G.L.S Shackle proposed a formalism wherein the calculus of \textit{potential surprise} was defined as a subjective of the degree by which the observer would be surprised. If an event is entirely possible, then there would be no surprise attached to its occurence.
+
+A fuzzy set is a set whose membership is not absolute, but a matter of degree, such as the set of tall people. A fuzzy set F is characterised by the membership function $\mu_F$ which specifies the degree to which each object in a universe $U$ is a member of $F$. The assignment of a value u to $X$ has the form:
+$$
+X = u : \mu_F(u)
+$$
+
+A possibility distribution function $\pi_x$ which is defined to be equal to the membership function of F: 
+$$
+\pi_x = \mu_F
+$$
+Thus $\pi_x$, the possibility that $X = u$ is taken to be equal to $\mu_F(u)$.
+\subsubsection{Limitations of numerical techniques}
+Parsons and Hunter describe three limitations of numerical techniques and how various mathematicians have pointed them out:
+\begin{itemize}
+    \item Lack of development of fuzzy sets and possibility theory
+    \item Interpretation of results as they are in the form of numbers
+    \item Computational expense
+\end{itemize} 
+\subsection{Symbolic Approaches}
+Nonmonotonic logics were designed with an intention to create sound formal mechanisms for reasoning in such a way that they overcome the limits of numerical approaches. There are many problems in AI that cannot be solved using classical logic, for example, problems that require "commonsense".
+
+Nonmonotonic approaches can be divided into three categories: Default Logic, Argumentation and Truth Maintenance Systems
+
+\subsubsection{Default Logic}
+Default logic allows the modelling of prototypical reasoning by allowing special inference rules, known as default rules to be added to a standard first order logic.
+
+Given a set of default rules D and a first order theory W, it is possible to define an extension of the default theory as the closure of W plus a maximal consistent set of consequences of D. An extension E of a default theory is a minimal set of beliefs that contain W are deductively closed and maximally consistent with the rules in D. Thus if S is a sentence then, $\Gamma(S)$ is a minimal set such that:
+
+$$
+W \subseteq \Gamma(S)
+$$
+$$
+Th(\Gamma(S)) = \Gamma(S)
+$$
+where Th(T) is the deductive closure of T.
+
+Despite the maturity of the theoretical work on default logic, there are as yet few applications because there has been less attention paid to providing prospective application builders with useful tools for using default logic.
+\subsubsection{Argumentation}
+An argument can be structured so that from facts a qualified claim can be argued only if:
+\begin{enumerate}[1]
+    \item there is some warrant that can be used with the facts to logically derive the claim
+    \item there is no other argument that would act as a rebuttal of the claim
+\end{enumerate}
+
+An argument can be modelled by a pair $(\phi, \alpha)$ where $\phi$ is a set of forumlae, and $\alpha$ is a formula derived as a conclusion from the assumptions $\phi$ also known as grounds of the argument.
+
+Argumentation can be used to handle uncertain information by extending the pair to a triple in which the third quantity is a measure of the degree to which $\alpha$ is believed to be true.
+
+\subsubsection{Truth Maintenance System}
+A Truth Maintenance System records information about each inference that is generated from a set of assumptions. There are two types of TMS:
+\begin{itemize}
+    \item Justification Based Truth Maintenance System: When an inconsistency in stored rules is detected, some external system is invoked to resolved the inconsistency.
+    \item Assumption Based Truth Maintenance System: inconsistency is handled by creating new consistent subsets and identifying which inferences may be made from them.
+\end{itemize}
+\subsection{Subjective Logic}
+The below definitions and diagram were obtained from \mycite{Subjective Logic: A Formalism for Handling Uncertainty, Audun Jøsang, 2016}
+
+In binary logic a proposition about the state of the world must be either true or
+false, which fits well with an assumed objective world. Probability calculus takes
+argument probabilities in the range [0,1], and hence to some extent reflects subjectivity by allowing propositions to be partially true. However, we are often unable to
+estimate probabilities with confidence because we lack the necessary evidence. A
+formalism for expressing degrees of uncertainty about beliefs is therefore needed in
+order to more faithfully reflect the perceived world in which we are all immersed.
+In addition, whenever a belief about a proposition is expressed, it is always done by
+an individual, and it can never be considered to represent a general and objective
+belief. It is therefore necessary that the formalism also includes belief ownership in
+order to reflect the fundamental subjectivity of all beliefs.
+
+In subjective logic, we can represent an opinion as \opinion{x}{b_x}{d_x}{u_x}{a_x}, where $b_x$ represents belief mass distribution, $d_x$ represents disbelief, $u_x$ represents uncertainty mass and $a_x$ represents base rate. 
+\begin{center}
+    \includegraphics[width=6in]{images/barycentric.png}
+\end{center}
+The advantages of using subjective logic are that real-world situations can be
+realistically modelled with regard to how those situations are perceived, and that conclusions more correctly reflect the ignorance and uncertainties that necessarily result from partially uncertain input arguments. Subjective logic has the advantage of providing advanced operators for Dirichlet PDFs, for which no practical analytical solutions previously existed. It should be mentioned that the simplicity of some SL operators comes at the cost of allowing those operators to be approximations of the analytically correct operators. 
 \end{document}
